@@ -11,6 +11,11 @@ export const Styled = styled(BaseStyles)`
         word-break: break-word;
     }
 
+    blockquote {
+        border-left: 3px solid;
+        padding-left: 1rem;
+    }
+
     h1,
     h2,
     h3,

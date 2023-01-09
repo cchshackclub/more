@@ -1,6 +1,6 @@
 ---
 date: 2022-12-19
-title: Building a holiday card together!
+title: "12/19/2022: Building a holiday card together!"
 ---
 
 Here's what the final card will look like:
@@ -640,17 +640,16 @@ Okay, let's add the signature form after the "To: You" text. Here's the HTML:
 
 We use the `form` tag, which holds the choices in a form. Inside here, we have two elements:
 
-* An `input` element. This is the text box where the user will type in their name.
-    * `autocomplete="off"` turns off autocomplete
-    * `type="text"` makes this a text box. For example, you can use `type="password"` for a password box.
-    * `name="name"` is the name for this input box.
-    * `placeholder="Sign this card!"` is the placeholder for when the user hasn't typed anything yet
-    * `required` makes this input required, so the user can't turn it in if theyhaven't filled it out yet
-* A `button` element. This is the submit button.
-    * `type="submit"` turns this button into a submit button.
+-   An `input` element. This is the text box where the user will type in their name.
+    -   `autocomplete="off"` turns off autocomplete
+    -   `type="text"` makes this a text box. For example, you can use `type="password"` for a password box.
+    -   `name="name"` is the name for this input box.
+    -   `placeholder="Sign this card!"` is the placeholder for when the user hasn't typed anything yet
+    -   `required` makes this input required, so the user can't turn it in if theyhaven't filled it out yet
+-   A `button` element. This is the submit button.
+    -   `type="submit"` turns this button into a submit button.
 
 Of course, we haven't done the styling yet, so this form doesn't look particularly great right now. Let's spruce up the styles:
-
 
 ```css
 #sign {
@@ -693,15 +692,15 @@ Of course, we haven't done the styling yet, so this form doesn't look particular
 
 Here, we're styling the form, then the input inside the form (`#sign input`), and then the button inside the form (`#sign button`). Hopefully some of this looks familiar. When we style the form, we:
 
-* Add a border
-* Add a shadow
-* Add some padding
-* Change the font/font size
-* Use `display: flex` so that the input and button show up to next to each other instead of on separate rows. Then, we use `justify-content: space-between" so that the input and button are at separate ends of the form (there is space between them).
+-   Add a border
+-   Add a shadow
+-   Add some padding
+-   Change the font/font size
+-   Use `display: flex` so that the input and button show up to next to each other instead of on separate rows. Then, we use `justify-content: space-between" so that the input and button are at separate ends of the form (there is space between them).
 
 When we style the input, we:
 
-* Revert the styles the browsers give `input`s. This involves removing the `border`, 
+-   Revert the styles the browsers give `input`s. This involves removing the `border`,
 
 ## Step Two
 
