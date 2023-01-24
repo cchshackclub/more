@@ -1,0 +1,638 @@
+---
+date: 2023-01-23
+title: "Let's learn JavaScript by building Tic Tac Toe!"
+---
+
+We're going to be learning JavaScript by building a Tic Tac Toe game!
+
+Before we get started, let's discuss some terminology:
+
+-   A **program** is a series of instructions a computer follows to get something done. For example, a program was used to generate the page that you're reading right now.
+-   A **programming language** lets **programmers/coders** like us write programs. Just like we humans have English, Spanish, French, whatever, there are a bunch of programming languages, like JavaScript, which we're going to be learning today!
+
+We're going to be using [Replit](https://replit.com), so the first thing to do, of course, is to head over there.
+
+## A quick walkthrough on how to use Replit
+
+Once you've logged into Replit, you'll see a screen like this:
+
+![Replit](/images/2023-01-23/replit.png)
+
+To create a new **program**, we're going to click on the "Create" button in the top left corner. You'll see a screen that looks like this:
+
+![New repl](/images/2023-01-23/new-repl.png)
+
+We're going to create a new HTML, CSS, JS project. Feel free to name it whatever you want - I'll name mine Tic Tac Toe for posterity.
+
+> For those of you who weren't here the first week, HTML is short for Hyper Text Markup Language, CSS is short for Cascading Style Sheets, and JS is short for, of course, JavaScript! These three are the essential components of any website. Let's take this page for example. HTML is used for the content of the page, such as text and images. CSS is used to style the content, and JavaScript is used to add interactivity, such as the random image in the header.
+
+## Building the game
+
+Let's go to the `script.js` file that Replit has created for us. This is where we'll write our JavaScript to interact with the user.
+
+### How Tic Tac Toe works
+
+Okay, you probably know how Tic Tac Toe works, so we'll skip that. But how would we implement it? Let's divide it into a step-by-step process.
+
+First, at the start of each game, we want to:
+
+-   Ask each player for their name and assign them to either X or O
+
+Then, we keep playing the game _until we reach a tie, or someone wins._ This is what will happen each turn:
+
+-   X will go first.
+-   O will go second.
+-   For each player, we will run the following steps:
+    -   Show the user the current board.
+    -   Ask them where they want to go, 1 - 9 for each of the squares.
+    -   Make sure that where they want to go is valid and empty.
+    -   If so, put their letter (X or O) there and check if it's a tie or a win.
+    -   If it's a tie or a win, the game is over.
+    -   If it's not a tie or a win, then the game keeps going, and we'll move on to the next player.
+
+Hopefully that makes sense! We'll now introduce the first four lines of code:
+
+```javascript
+let playerOne = "X";
+let playerOneName = "";
+let playerTwo = "O";
+let playerTwoName = "";
+```
+
+You all have worked with Sprig, which is based on JavaScript. These are called **variables**. In math, variables are just letters that represent some number value, like `x = 6 + 7`.
+
+![Variable box](https://qph.cf2.quoracdn.net/main-qimg-6d4e51669692f9dde06be87754d92b24-lq)
+
+In a nutshell, a variable just stores a value. In the picture, `name` is a variable with a value of `Robert`.
+
+There are different types of values. In math, you only have numbers (duh). In programming, you have different values. We have some pretty funny terms for these values:
+
+-   **Strings** are text.
+-   **Ints** are whole numbers.
+-   **Floats** are decimal numbers.
+-   **Booleans** stand for either `true` or `false`. For example, a light switch is either on (true) or off (false).
+
+There are a bunch more, which we'll get more into later. These are the _primitive_ ones - that is, the most basic ones.
+
+In our code, we have four variables:
+
+-   `firstPlayer`, which is a string and just stores the letter of the first player (X).
+-   `firstPlayerName`, which is a string and just stores the name of the first player.
+-   `secondPlayer`, which is a string and just stores the letter of the second player (O).
+-   `secondPlayerName`, which is a string and just stores the name of the second player.
+
+Just like variables in math follow one rule - it has to be a letter - variables in programming can be named anything you want to name them, as long as they follow a set of rules. These rules differ by language, but in JavaScript:
+
+-   Start them with a letter, underscore \_, or a dollar sign $.
+-   After the first letter, you can use numbers, as well as letters, underscores, or dollar signs.
+-   You can't use any **reserved keywords**. For example, you can't use `let` because that is already being used to define a variable.
+
+Now we're going to write a **function**. In math, this is a function: `f(x) = x + 5`. You put in an **input**, which is x = \<whatever x is equal to\>, and it **output**s a value after plugging the input into the equation.
+
+A function in programming is very similar. It's just a block of code that you can call over and over again. So you don't have to write the same code over and over again. Add this to your code:
+
+```js
+function init() {
+    // This is a function.
+}
+```
+
+This is a function called `init`. Every function has a couple of parts:
+
+-   The `function` keyword says, "This is a function."
+-   The `()` is where we pass in our input. In programming, these are called **arguments**. I'll show you how this works later.
+-   The braces {} show that this is a block of code. Therefore, it is very important that you make sure to wrap your function in these braces.
+-   The `// This is a function.` is just a **comment**. That is, the computer won't read it. It's just for us programmers to read and helps us better understand the code.
+
+You might have seen this written another way:
+
+```js
+let init = () => {
+    // This is also a function.
+};
+```
+
+Yup, this is how we wrote functions in the Sprig. Either way works, which I know is pretty confusing. I personally prefer this way, but make your choice.
+
+Let's write some code for our function.
+
+```js
+function init() {
+    // Get player's names
+    playerOneName = prompt("What's player one (X)'s name?");
+}
+```
+
+One thing about variables is that we can change their variable. Here, we use `prompt`, a function built into JavaScript, to ask the first player, "What's player one (X)'s name?". We store this value in `playerOneName`.
+
+So if you type in "Amanda", `playerOneName` will be equal to "Amanda". But if you type in nothing, the result will be "". That's not very useful. We're going to use a **while loop** to fix this:
+
+```js
+function init() {
+    // Get player's names
+    playerOneName = prompt("What's player one (X)'s name?");
+    while (playerOneName.length === 0) {
+        playerOneName = prompt("What's player one (X)'s name?");
+    }
+}
+```
+
+A while loop is a just a block of code that keeps running while a **condition** is true. Here, our condition is `playerOneName.length === 0`. Let's dissect this part by part.
+
+-   `playerOneName.length` gives us the length of our string. If `playerOneName` is "Amanda", the length is 6. If it's equal to "", the length will be 0.
+-   `===` means equal to.
+-   Therefore, `playerOneName.length === 0` means, "If the length of `playerOneName` is equal to zero, then run this code."
+
+You'll notice that there are braces, again. Braces will always surround blocks of code.
+
+So basically, while the first player doesn't enter a valid name, we keep asking the first player what their name is.
+
+Let's do the same for the second player:
+
+```javascript
+function init() {
+    // Get player's names
+    playerOneName = prompt("What's player one (X)'s name?");
+    while (playerOneName.length === 0) {
+        playerOneName = prompt("What's player one (X)'s name?");
+    }
+
+    playerTwoName = prompt("What's player two (O)'s name?");
+    while (playerTwoName.length === 0) {
+        playerTwoName = prompt("What's player two (O)'s name?");
+    }
+}
+```
+
+This function will run when the game loads:
+
+```js
+window.onload = () => {
+    init();
+};
+```
+
+Look at that. Function **syntax** (syntax is just a term that means, the grammar of a programming language) again. What this says is that we will run this function when the page is loaded, hence `onload`.
+
+Now if you run your program, it will ask you for two players' names.
+
+We're now going to implement the **game loop**, which is pretty much just a while loop that runs over and over again until the game is done:
+
+```javascript
+function run() {
+    while (true) {
+        // Keep running while the game isn't over
+    }
+}
+```
+
+Let's look at our list of steps again. The first step is to show the user the current board. First, let's create a variable to store the board:
+
+```
+let board = [
+	"#", "#", "#",
+	"#", "#", "#",
+	"#", "#", "#"
+];
+```
+
+This is known as an **array**. An array is just a list of values. In our case, we have an array with 9 strings. Each of these strings represents each little square of the board that the player can choose to go on. Arrays are created with the brackets []. You've probably seen this before in Sprig, like when:
+
+```js
+setLegend(
+    [player, bitmap`...`] // <= This is an array!
+);
+```
+
+Back to `board`. The special thing about arrays is that to get the value at an **index8**, or position in the array, we have to start from zero. For example, take an array like this:
+
+```js
+let board = ["X", "#", "#", "#", "O", "#", "#", "#", "#"];
+```
+
+**Note: I want to make this very clear now. Your program does not need spacing. It makes it easier for us to read, but technically you could put your entire program on one line, and it would still work.**
+
+We say that X is at index 0. Instead of starting at 1, we start at 0. Where is O then? Well, O is going to be 0, 1, 2, 3, 4. O is going to be at index 4. To get the value at an index, you use this:
+
+```js
+board[4];
+```
+
+It's the brackets again. This time, we're saying, get the value at index 4 of the array `board`.
+
+Now let's actually show the board. We have to do this multiple times, so let's write a function to keep things easy:
+
+```js
+function printBoard() {
+    return ` ${board[0]} | ${board[1]} | ${board[2]}
+    ${board[3]} | ${board[4]} | ${board[5]}
+    ${board[6]} | ${board[7]} | ${board[8]}
+`;
+}
+```
+
+Woah. What's up with the numbers? Let's take a look at this. First, we create a function called `printBoard`. This should be its own function, which means the outline of your program should look something like this:
+
+```
+// Variables
+
+function printBoard() {}
+
+function init() {}
+
+function run() {}
+
+window.onload = () => {};
+```
+
+Then, we have `return`. Back to the algebra analogy. For every input, there's an output, right? Well, `return` is used to return the output of a function. Here, we're returning a string. Up until now, we've used quotation marks " for strings, but we can also use:
+
+-   Single quotation marks '
+-   Backticks `
+
+Backticks like we saw in Sprig! The special thing about backticks, though, is that you can insert values inside. To insert values, you use `${value}`. So we have:
+
+```
+ ${board[0]} | ${board[1]} | ${board[2]}
+```
+
+This is the first row, with the values of index 0, 1, 2 in our `board` array.
+
+Repeat this three times for all three rows, and that's how this function works! It just returns a string with the value of the board.
+
+Now let's use this function. We're also going to ask the player for the index they want to put their letter on:
+
+```js
+let playerOneTurn = prompt(
+    printBoard() +
+        "It's " +
+        playerOneName +
+        "'s turn. Where do you want to go (1 - 9)?"
+);
+```
+
+We are using another built-in function of JavaScript. One problem is that the user could enter something that's invalid. That includes:
+
+-   A value that's not a number, like a letter
+-   A number that's less than 1, or greater than 9 - it's **outside the bounds** of our board
+-   A number that's already been taken up
+
+Let's write a function called `validTurn` that will return a boolean true or false, based on whether or not an index is valid:
+
+```js
+function validTurn(pos) {
+    // Determine if location is already take
+    if (pos === NaN || pos < 1 || pos > 9 || board[pos - 1] !== "#") {
+        return false;
+    } else {
+        return true;
+    }
+}
+```
+
+This is the first time we something inside the parentheses (). We can finally talk about arguments. These are basically the inputs of a function. We put it in, the function can use it, and then return an output based on the input. In fact, we take an argument we call `pos`, and we use an if-else statement to determine if it's valid.
+
+```js
+let playerOneTurn = prompt(
+    printBoard() +
+        "It's " +
+        playerOneName +
+        "'s turn. Where do you want to go (1 - 9)?"
+);
+while (validTurn(Number(playerOneTurn)) === false) {
+    playerOneTurn = prompt(
+        printBoard() +
+            "It's " +
+            playerOneName +
+            "'s turn. Where do you want to go (1 - 9)?"
+    );
+}
+```
+
+Once player one has decided on their turn, we need to update the board. We can just update the value at the index they chose. Since they input a number between 1 - 9 but our array starts at index 0, we need to subtract 1:
+
+```js
+board[playerOneTurn - 1] = playerOne;
+```
+
+Now we need to check if player one's move has resulted in a tie - that is, the board is full - or a win - that is, they got three in a row. Let's deal with ties. We will write a function to take care of this:
+
+```js
+function boardFull() {
+    // Determine if board is full
+    for (let i = 0; i < board.length; i++) {
+        if (board[i] === "#") {
+            return false;
+        }
+    }
+    return true;
+}
+```
+
+```js
+if (boardFull() === true) {
+    alert(printBoard() + "IT'S A TIE!");
+    break;
+}
+```
+
+`break` breaks out of the while loop, so it's not running anymore, effectively ending the game.
+
+Now let's write a function to tell if player one has won yet. Here is where arguments, which are like inputs in math, come in handy:
+
+```js
+function playerWin(player) {
+    // Determine if player won
+    if (board[0] === player && board[1] === player && board[2] === player) {
+        // Across first row
+        return true;
+    } else if (
+        board[3] === player &&
+        board[4] === player &&
+        board[5] === player
+    ) {
+        // Across second row
+        return true;
+    } else if (
+        board[6] === player &&
+        board[7] === player &&
+        board[8] === player
+    ) {
+        // Across third row
+        return true;
+    } else if (
+        board[0] === player &&
+        board[3] === player &&
+        board[6] === player
+    ) {
+        // Across first column
+        return true;
+    } else if (
+        board[1] === player &&
+        board[4] === player &&
+        board[7] === player
+    ) {
+        // Across second column
+        return true;
+    } else if (
+        board[2] === player &&
+        board[5] === player &&
+        board[8] === player
+    ) {
+        // Across third column
+        return true;
+    } else if (
+        board[0] === player &&
+        board[4] === player &&
+        board[8] === player
+    ) {
+        // Left to right diagonal
+        return true;
+    } else if (
+        board[2] === player &&
+        board[4] === player &&
+        board[6] === player
+    ) {
+        // Right to left diagonal
+        return true;
+    } else {
+        return false;
+    }
+}
+```
+
+That's a lot of if-else statements, but pretty self explanatory. The only new thing we are introducing is the argument, `player`.
+
+Let's go back and revise our if-else statement for ending the game:
+
+```js
+if (boardFull() === true) {
+    alert(printBoard() + "IT'S A TIE!");
+    break;
+} else if (playerWin(playerOne)) {
+    alert(printBoard() + playerOneName.toUpperCase() + " WON!");
+    break;
+}
+```
+
+Here there's something new, `toUpperCase`. This is a function only for strings that makes the string all uppercase text.
+
+Looking back at our steps, we're repeating the same steps for player two. So let's add this in:
+
+```js
+// Player Two's turn
+let playerTwoTurn = prompt(printBoard() + "It's " + playerTwoName + "'s turn. Where do you want to go (1 - 9)?");
+while (validTurn(Number(playerTwoTurn)) === false) {
+    playerTwoTurn = prompt(printBoard() + "It's " + playerTwoName + "'s turn. Where do you want to go (1 - 9)?");
+}
+
+board[playerTwoTurn - 1] = playerTwo;
+if (boardFull() === true) {
+    alert(printBoard() + "IT'S A TIE!");
+    break;
+} else if (playerWin(playerTwo)) {
+    alert(printBoard() + playerTwoName.toUpperCase() + " WON!");
+    break;
+}
+```
+
+Now our game is all done! Of course, we still have to **call** our function for the game to actually run:
+
+```js
+window.onload = () => {
+    init();
+    run();
+};
+```
+
+And now you can play Tic Tac Toe!
+
+## Conclusion
+
+Here's what we got to cover:
+
+-   Variables and their types
+-   Functions
+-   While and for loops
+
+For a challenge, try these:
+
+-   Show the grid with a for loop instead.
+-   Write an AI to play the game with you.
+-   Ask the players if they want to play again, and if they want to, start a new game.
+
+Here is the code in case you get lost:
+
+```js
+let playerOne = "X";
+let playerOneName = "";
+let playerTwo = "O";
+let playerTwoName = "";
+let board = ["#", "#", "#", "#", "#", "#", "#", "#", "#"];
+
+function init() {
+    // Get player's names
+    playerOneName = prompt("What's player one (X)'s name?");
+    while (playerOneName.length === 0) {
+        playerOneName = prompt("What's player one (X)'s name?");
+    }
+
+    playerTwoName = prompt("What's player two (O)'s name?");
+    while (playerTwoName.length === 0) {
+        playerTwoName = prompt("What's player two (O)'s name?");
+    }
+}
+
+function boardFull() {
+    // Determine if board is full
+    for (let i = 0; i < board.length; i++) {
+        if (board[i] === "#") {
+            return false;
+        }
+    }
+    return true;
+}
+
+function playerWin(player) {
+    // Determine if player won
+    if (board[0] === player && board[1] === player && board[2] === player) {
+        // Across first row
+        return true;
+    } else if (
+        board[3] === player &&
+        board[4] === player &&
+        board[5] === player
+    ) {
+        // Across second row
+        return true;
+    } else if (
+        board[6] === player &&
+        board[7] === player &&
+        board[8] === player
+    ) {
+        // Across third row
+        return true;
+    } else if (
+        board[0] === player &&
+        board[3] === player &&
+        board[6] === player
+    ) {
+        // Across first column
+        return true;
+    } else if (
+        board[1] === player &&
+        board[4] === player &&
+        board[7] === player
+    ) {
+        // Across second column
+        return true;
+    } else if (
+        board[2] === player &&
+        board[5] === player &&
+        board[8] === player
+    ) {
+        // Across third column
+        return true;
+    } else if (
+        board[0] === player &&
+        board[4] === player &&
+        board[8] === player
+    ) {
+        // Left to right diagonal
+        return true;
+    } else if (
+        board[2] === player &&
+        board[4] === player &&
+        board[6] === player
+    ) {
+        // Right to left diagonal
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function printBoard() {
+    return ` ${board[0]} | ${board[1]} | ${board[2]}
+${board[3]} | ${board[4]} | ${board[5]}
+${board[6]} | ${board[7]} | ${board[8]}
+`;
+}
+
+function validTurn(pos) {
+    // Determine if location is already take
+    if (
+        post === "" ||
+        pos === NaN ||
+        pos < 1 ||
+        pos > 9 ||
+        board[pos - 1] !== "#"
+    ) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function run() {
+    // Run the game while neither player has won
+    while (true) {
+        // Player One makes move, then Player Two
+        let playerOneTurn = prompt(
+            printBoard() +
+                "It's " +
+                playerOneName +
+                "'s turn. Where do you want to go (1 - 9)?"
+        );
+        while (validTurn(Number(playerOneTurn)) === false) {
+            playerOneTurn = prompt(
+                printBoard() +
+                    "It's " +
+                    playerOneName +
+                    "'s turn. Where do yoou want to go (1 - 9)?"
+            );
+        }
+
+        board[playerOneTurn - 1] = playerOne;
+        if (boardFull() === true) {
+            alert(printBoard() + "IT'S A TIE!");
+            break;
+        } else if (playerWin(playerOne)) {
+            alert(printBoard() + playerOneName.toUpperCase() + " WON!");
+            break;
+        }
+
+        // Player Two's turn
+        let playerTwoTurn = prompt(
+            printBoard() +
+                "It's " +
+                playerTwoName +
+                "'s turn. Where do you want to go (1 - 9)?"
+        );
+        while (validTurn(Number(playerTwoTurn)) === false) {
+            playerTwoTurn = prompt(
+                printBoard() +
+                    "It's " +
+                    playerTwoName +
+                    "'s turn. Where do you want to go (1 - 9)?"
+            );
+        }
+
+        board[playerTwoTurn - 1] = playerTwo;
+        if (boardFull() === true) {
+            alert(printBoard() + "IT'S A TIE!");
+            break;
+        } else if (playerWin(playerTwo)) {
+            alert(printBoard() + playerTwoName.toUpperCase() + " WON!");
+            break;
+        }
+    }
+}
+
+window.onload = () => {
+    init();
+    run();
+};
+```
+
+A live demo is located [here](https://tic-tac-toe.jianmin-chen.repl.co/).
