@@ -12,13 +12,11 @@ export default function Index({ generalBG, events }) {
                 title="Timeline"
                 description="What's CCHS Hack Club up to?"
             />
-            <Container>
-                <VerticalTimeline>
-                    {events.map((event, i) => (
-                        <Post key={i} file={event} />
-                    ))}
-                </VerticalTimeline>
-            </Container>
+            <VerticalTimeline>
+                {events.map((event, i) => (
+                    <Post key={i} file={event} />
+                ))}
+            </VerticalTimeline>
         </Box>
     );
 }
